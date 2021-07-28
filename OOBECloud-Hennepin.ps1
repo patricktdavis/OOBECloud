@@ -15,7 +15,7 @@ PS C:\> OOBECloud-Hennepin.ps1
 
 $Serial = (Get-CimInstance -ClassName Win32_BIOS).SerialNumber
 If (Test-Path -Path 'C:\Windows\System32\kernel32.dll') {
-    $Edition = (Get-WindowsEdition -Path c:\).edition
+    $Edition = (Get-WindowsEdition -Online).edition
     Function Invoke-OSVersion {
 
         $signature = @'
