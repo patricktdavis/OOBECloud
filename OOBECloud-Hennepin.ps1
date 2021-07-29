@@ -67,6 +67,73 @@ function Invoke-OOBECloud {
     Invoke-NewOOBEBoxHD
 }
 
+function Start-SC2Deploy {
+    [CmdletBinding()]
+    param (
+        [Parameter(ValueFromPipeline = $true)]
+        [switch]$UpdateWindows
+    )
+    #=======================================================================
+    #	Block
+    #=======================================================================
+    Block-StandardUser
+    Block-WindowsVersionNe10
+    Block-PowerShellVersionLt5
+    #=======================================================================
+    #   Header
+    #=======================================================================
+    Write-Host -ForegroundColor DarkGray '========================================================================='
+    Write-Host -ForegroundColor Green 'Start-SC2 Update Deploy'
+    #=======================================================================
+    #   Transcript
+    #=======================================================================
+    Write-Host -ForegroundColor DarkGray '========================================================================='
+    Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) Start-Transcript"
+    $Transcript = "$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-SC2Deploy.log"
+    Start-Transcript -Path (Join-Path "$env:SystemRoot\Temp" $Transcript) -ErrorAction Ignore
+    Write-Host -ForegroundColor DarkGray '========================================================================='
+    #=======================================================================
+    #=======================================================================
+    #   PSGallery
+    #=======================================================================
+    $PSGalleryIP = (Get-PSRepository -Name PSGallery).InstallationPolicy
+    if ($PSGalleryIP -eq 'Untrusted') {
+        Write-Host -ForegroundColor DarkGray '========================================================================='
+        Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) Set-PSRepository -Name PSGallery -InstallationPolicy Trusted"
+        Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    }
+    #=======================================================================
+    #=======================================================================
+    #	Windows Update Software
+    #=======================================================================
+    if ($UpdateWindows) {
+        Write-Host -ForegroundColor DarkGray '========================================================================='
+        Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) Windows and Microsoft Update Software"
+        if (!(Get-Module PSWindowsUpdate -ListAvailable)) {
+            try {
+                Install-Module PSWindowsUpdate -Force
+            } catch {
+                Write-Warning 'Unable to install PSWindowsUpdate PowerShell Module'
+                $UpdateWindows = $false
+            }
+        }
+    }
+    if ($UpdateWindows) {
+        Write-Host -ForegroundColor DarkCyan 'Add-WUServiceManager -MicrosoftUpdate -Confirm:$false'
+        Add-WUServiceManager -MicrosoftUpdate -Confirm:$false
+        Write-Host -ForegroundColor DarkCyan 'Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot'
+        Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot -NotTitle 'Malicious' -UpdateType 'Software'
+    }
+    #=======================================================================
+    #	Stop-Transcript
+    #=======================================================================
+    Write-Host -ForegroundColor DarkGray '========================================================================='
+    Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) Stop-Transcript"
+    Stop-Transcript
+    Write-Host -ForegroundColor DarkGray '========================================================================='
+    #=======================================================================
+}
+
 
 function Invoke-NewOOBEBoxHD {
     <#
@@ -93,7 +160,7 @@ function Invoke-NewOOBEBoxHD {
 
     $OOBECloud = New-Object system.Windows.Forms.Form
     $OOBECloud.ClientSize = New-Object System.Drawing.Point(800,450)
-    $OOBECloud.text = 'Hennepin County SSD Team-Test5'
+    $OOBECloud.text = 'Hennepin County SSD Team-Test6'
     $OOBECloud.TopMost = $true
 
     $Title = New-Object system.Windows.Forms.Label
@@ -112,10 +179,10 @@ function Invoke-NewOOBEBoxHD {
     $InstalledOSDescription.location = New-Object System.Drawing.Point(43,119)
     $InstalledOSDescription.Font = New-Object System.Drawing.Font('Segoe UI',14,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Italic))
 
-    $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.Label
-    $InstalledOperatingSystemLabel.AutoSize = $true
+    $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.TextBox
+    $InstalledOperatingSystemLabel.multiline = $false
     $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild"
-    $InstalledOperatingSystemLabel.width = 780
+    $InstalledOperatingSystemLabel.width = 100
     $InstalledOperatingSystemLabel.height = 20
     $InstalledOperatingSystemLabel.location = New-Object System.Drawing.Point(41,163)
     $InstalledOperatingSystemLabel.Font = New-Object System.Drawing.Font('Segoe UI',20,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Bold))
@@ -128,10 +195,10 @@ function Invoke-NewOOBEBoxHD {
     $SerialDescription.location = New-Object System.Drawing.Point(43,220)
     $SerialDescription.Font = New-Object System.Drawing.Font('Segoe UI',14,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Italic))
 
-    $SerialLabel = New-Object system.Windows.Forms.Label
-    $SerialLabel.AutoSize = $true
+    $SerialLabel = New-Object system.Windows.Forms.TextBox
+    $SerialLabel.multiline = $false
     $SerialLabel.text = "$Serial"
-    $SerialLabel.width = 780
+    $SerialLabel.width = 100
     $SerialLabel.height = 20
     $SerialLabel.location = New-Object System.Drawing.Point(43,260)
     $SerialLabel.Font = New-Object System.Drawing.Font('Segoe UI',20,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Bold))
@@ -171,7 +238,7 @@ function Invoke-NewOOBEBoxHD {
         Install-Module OSD -Force
         Write-Host -ForegroundColor Cyan 'Importing OSD PowerShell Module'
         Import-Module OSD -Force
-        Start-OOBEDeploy -UpdateWindows -Verbose
+        Start-SC2Deploy -UpdateWindows -Verbose
     }
 }
 
