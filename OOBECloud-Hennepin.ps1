@@ -93,7 +93,7 @@ function Invoke-NewOOBEBoxHD {
 
     $OOBECloud = New-Object system.Windows.Forms.Form
     $OOBECloud.ClientSize = New-Object System.Drawing.Point(800,450)
-    $OOBECloud.text = 'Hennepin County SSD Team-Test4'
+    $OOBECloud.text = 'Hennepin County SSD Team-Test5'
     $OOBECloud.TopMost = $true
 
     $Title = New-Object system.Windows.Forms.Label
@@ -171,7 +171,7 @@ function Invoke-NewOOBEBoxHD {
         Install-Module OSD -Force
         Write-Host -ForegroundColor Cyan 'Importing OSD PowerShell Module'
         Import-Module OSD -Force
-        Start-OOBEDeploy -AddNetFX3 -UpdateDrivers -UpdateWindows -Verbose
+        Start-OOBEDeploy -UpdateWindows -Verbose
     }
 }
 
