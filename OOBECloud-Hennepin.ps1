@@ -16,17 +16,8 @@ PS C:\> OOBECloud-Hennepin.ps1
 $Serial = (Get-CimInstance -ClassName Win32_BIOS).SerialNumber
 If (Test-Path -Path 'C:\Windows\System32\kernel32.dll') {
     $Edition = (Get-WindowsEdition -Online).edition
-    Function Invoke-OSVersion {
-
-        $signature = @'
-[DllImport("kernel32.dll")]
-public static extern uint GetVersion();
-'@
-        Add-Type -MemberDefinition $signature -Name 'Win32OSVersion' -Namespace Win32Functions -PassThru
-    }
-    $OSBuild = [System.BitConverter]::GetBytes((Invoke-OSVersion)::GetVersion())
-    $Build = [byte]$OSBuild[2],[byte]$OSBuild[3]
-    $BuildNumber = [System.BitConverter]::ToInt16($build,0)
+    $BuildNumber = ([environment]::OSVersion.Version).Build
+    $Windows = 'Windows 10'
 
     if ($BuildNumber -eq '19042') {
         $InstalledBuild = '20H2'
@@ -46,6 +37,7 @@ public static extern uint GetVersion();
 } else {
     $InstalledBuild = 'Installed'
     $Edition = 'No OS'
+    $Windows = ''
 }
 
 #=============================================================================
@@ -122,7 +114,7 @@ function Invoke-NewOOBEBoxHD {
 
     $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.TextBox
     $InstalledOperatingSystemLabel.multiline = $false
-    $InstalledOperatingSystemLabel.text = "Windows 10 $Edition $InstalledBuild"
+    $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild"
     $InstalledOperatingSystemLabel.width = 100
     $InstalledOperatingSystemLabel.height = 20
     $InstalledOperatingSystemLabel.location = New-Object System.Drawing.Point(41,163)
