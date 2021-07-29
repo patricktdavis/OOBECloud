@@ -93,7 +93,7 @@ function Invoke-NewOOBEBoxHD {
 
     $OOBECloud = New-Object system.Windows.Forms.Form
     $OOBECloud.ClientSize = New-Object System.Drawing.Point(800,450)
-    $OOBECloud.text = 'Hennepin County SSD Team'
+    $OOBECloud.text = 'Hennepin County SSD Team-Test1'
     $OOBECloud.TopMost = $true
 
     $Title = New-Object system.Windows.Forms.Label
@@ -116,7 +116,7 @@ function Invoke-NewOOBEBoxHD {
     $InstalledOperatingSystemLabel.multiline = $false
     $InstalledOperatingSystemLabel.AutoSize = $true
     $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild"
-    $InstalledOperatingSystemLabel.width = 100
+    $InstalledOperatingSystemLabel.width = 780
     $InstalledOperatingSystemLabel.height = 20
     $InstalledOperatingSystemLabel.location = New-Object System.Drawing.Point(41,163)
     $InstalledOperatingSystemLabel.Font = New-Object System.Drawing.Font('Segoe UI',20,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Bold))
@@ -133,7 +133,7 @@ function Invoke-NewOOBEBoxHD {
     $SerialLabel.multiline = $false
     $SerialLabel.AutoSize = $true
     $SerialLabel.text = "$Serial"
-    $SerialLabel.width = 100
+    $SerialLabel.width = 780
     $SerialLabel.height = 20
     $SerialLabel.location = New-Object System.Drawing.Point(43,260)
     $SerialLabel.Font = New-Object System.Drawing.Font('Segoe UI',20,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Bold))
