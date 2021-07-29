@@ -114,6 +114,7 @@ function Invoke-NewOOBEBoxHD {
 
     $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.TextBox
     $InstalledOperatingSystemLabel.multiline = $false
+    $InstalledOperatingSystemLabel.AutoSize = $true
     $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild"
     $InstalledOperatingSystemLabel.width = 100
     $InstalledOperatingSystemLabel.height = 20
@@ -130,6 +131,7 @@ function Invoke-NewOOBEBoxHD {
 
     $SerialLabel = New-Object system.Windows.Forms.TextBox
     $SerialLabel.multiline = $false
+    $SerialLabel.AutoSize = $true
     $SerialLabel.text = "$Serial"
     $SerialLabel.width = 100
     $SerialLabel.height = 20
