@@ -93,7 +93,7 @@ function Invoke-NewOOBEBoxHD {
 
     $OOBECloud = New-Object system.Windows.Forms.Form
     $OOBECloud.ClientSize = New-Object System.Drawing.Point(800,450)
-    $OOBECloud.text = 'Hennepin County SSD Team-Test3'
+    $OOBECloud.text = 'Hennepin County SSD Team-Test4'
     $OOBECloud.TopMost = $true
 
     $Title = New-Object system.Windows.Forms.Label
