@@ -121,7 +121,7 @@ function Start-SC2Deploy {
     if ($UpdateWindows) {
         Write-Host -ForegroundColor DarkCyan 'Add-WUServiceManager -MicrosoftUpdate -Confirm:$false'
         Add-WUServiceManager -MicrosoftUpdate -Confirm:$false
-        Write-Host -ForegroundColor DarkCyan 'Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot'
+        Write-Host -ForegroundColor DarkCyan 'Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot -NotTitle Malicious -UpdateType Software'
         Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot -NotTitle 'Malicious' -UpdateType 'Software'
     }
     #=======================================================================
@@ -160,7 +160,7 @@ function Invoke-NewOOBEBoxHD {
 
     $OOBECloud = New-Object system.Windows.Forms.Form
     $OOBECloud.ClientSize = New-Object System.Drawing.Point(800,450)
-    $OOBECloud.text = 'Hennepin County SSD Team-Test6'
+    $OOBECloud.text = 'Hennepin County SSD Team'
     $OOBECloud.TopMost = $true
 
     $Title = New-Object system.Windows.Forms.Label
@@ -179,10 +179,10 @@ function Invoke-NewOOBEBoxHD {
     $InstalledOSDescription.location = New-Object System.Drawing.Point(43,119)
     $InstalledOSDescription.Font = New-Object System.Drawing.Font('Segoe UI',14,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Italic))
 
-    $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.TextBox
-    $InstalledOperatingSystemLabel.multiline = $false
+    $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.Label
+    $InstalledOperatingSystemLabel.AutoSize = $true
     $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild"
-    $InstalledOperatingSystemLabel.width = 100
+    $InstalledOperatingSystemLabel.width = 780
     $InstalledOperatingSystemLabel.height = 20
     $InstalledOperatingSystemLabel.location = New-Object System.Drawing.Point(41,163)
     $InstalledOperatingSystemLabel.Font = New-Object System.Drawing.Font('Segoe UI',20,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Bold))
@@ -195,10 +195,10 @@ function Invoke-NewOOBEBoxHD {
     $SerialDescription.location = New-Object System.Drawing.Point(43,220)
     $SerialDescription.Font = New-Object System.Drawing.Font('Segoe UI',14,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Italic))
 
-    $SerialLabel = New-Object system.Windows.Forms.TextBox
-    $SerialLabel.multiline = $false
+    $SerialLabel = New-Object system.Windows.Forms.Label
+    $SerialLabel.AutoSize = $true
     $SerialLabel.text = "$Serial"
-    $SerialLabel.width = 100
+    $SerialLabel.width = 780
     $SerialLabel.height = 20
     $SerialLabel.location = New-Object System.Drawing.Point(43,260)
     $SerialLabel.Font = New-Object System.Drawing.Font('Segoe UI',20,[System.Drawing.FontStyle]([System.Drawing.FontStyle]::Bold))
