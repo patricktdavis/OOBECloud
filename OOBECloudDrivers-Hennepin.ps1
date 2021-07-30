@@ -89,7 +89,7 @@ function Start-SC2Deploy {
     #=======================================================================
     Write-Host -ForegroundColor DarkGray '========================================================================='
     Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) Start-Transcript"
-    $Transcript = "$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-SC2Deploy.log"
+    $Transcript = "$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-DriverDeploy.log"
     Start-Transcript -Path (Join-Path "$env:SystemRoot\Temp" $Transcript) -ErrorAction Ignore
     Write-Host -ForegroundColor DarkGray '========================================================================='
     #=======================================================================
