@@ -183,7 +183,7 @@ function Invoke-NewOOBEBoxHD {
 
     $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.Label
     $InstalledOperatingSystemLabel.AutoSize = $true
-    $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild  $CurrentBuildnumber'.'$UBR"
+    $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild  $CurrentBuildnumber.$UBR"
     $InstalledOperatingSystemLabel.width = 780
     $InstalledOperatingSystemLabel.height = 20
     $InstalledOperatingSystemLabel.location = New-Object System.Drawing.Point(41,163)
