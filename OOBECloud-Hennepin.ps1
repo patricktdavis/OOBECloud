@@ -18,6 +18,8 @@ If (Test-Path -Path 'C:\Windows\System32\kernel32.dll') {
     $Edition = (Get-WindowsEdition -Online).edition
     $BuildNumber = ([environment]::OSVersion.Version).Build
     $Windows = 'Windows 10'
+    $CurrentBuildnumber = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').currentbuildnumber
+    $UBR = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ubr
 
     if ($BuildNumber -eq '19042') {
         $InstalledBuild = '20H2'
@@ -181,7 +183,7 @@ function Invoke-NewOOBEBoxHD {
 
     $InstalledOperatingSystemLabel = New-Object system.Windows.Forms.Label
     $InstalledOperatingSystemLabel.AutoSize = $true
-    $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild"
+    $InstalledOperatingSystemLabel.text = "$Windows $Edition $InstalledBuild  $CurrentBuildnumber'.'$UBR"
     $InstalledOperatingSystemLabel.width = 780
     $InstalledOperatingSystemLabel.height = 20
     $InstalledOperatingSystemLabel.location = New-Object System.Drawing.Point(41,163)
