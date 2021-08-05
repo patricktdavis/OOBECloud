@@ -256,7 +256,7 @@ Invoke-OOBECloud
 #Write-Host -ForegroundColor Cyan 'Resetting PS Execution Policy'
 #Set-ExecutionPolicy Restricted -Force -Verbose
 #Restart Machine
-#Write-Host -ForegroundColor Cyan 'Restarting in 20 seconds!'
+Write-Host -ForegroundColor Cyan 'Restarting in 20 seconds!'
 #Start-Sleep -Seconds 20
 #Restart-Computer
 
